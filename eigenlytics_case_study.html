@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en" data-mode="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Eigenlytics — Saisaa Ray</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --pop: #077c70; --pop-text: #077c70;
+  --bg:#f5f3ef; --bg2:#eceae4; --bg3:#e0ddd5;
+  --fg:#111111; --fg2:#444444; --fg3:#6f6f6f;
+  --rule:rgba(0,0,0,0.10); --rule-strong:#111111; --nav-bg:#f5f3efee;
+}
+[data-mode="dark"] {
+  --bg:#1e1e1e; --bg2:#272727; --bg3:#303030;
+  --fg:#e6e2da; --fg2:#a8a49c; --fg3:#989898; --pop-text:#09ac9b;
+  --rule:rgba(255,255,255,0.08); --rule-strong:var(--pop); --nav-bg:#1a1a1aee;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--fg);transition:background .3s,color .3s;}
+a{text-decoration:none;color:inherit;}
+
+nav{position:sticky;top:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:2px solid var(--rule-strong);display:flex;justify-content:space-between;align-items:center;padding:0 5%;height:60px;transition:background .3s,border-color .3s;}
+.nav-logo{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:2px;color:var(--fg);}
+.nav-links{display:flex;gap:24px;align-items:center;}
+.nav-links a{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--fg3);font-weight:500;transition:color .2s;}
+.nav-links a:hover,.back-link{color:var(--pop-text);}
+.back-link{font-weight:700 !important;}
+.mode-btn{border:1.5px solid var(--rule-strong);background:transparent;color:var(--fg);font-family:'DM Mono',monospace;font-size:11px;padding:5px 12px;border-radius:4px;cursor:pointer;letter-spacing:1px;transition:all .2s;}
+.mode-btn:hover{background:var(--pop);border-color:var(--pop);color:#fff;}
+
+/* HERO */
+.hero{padding:64px 5% 48px;border-bottom:1px solid var(--rule);}
+.hero-meta{font-family:'DM Mono',monospace;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--pop-text);margin-bottom:20px;}
+
+/* h1 — case study title */
+h1.hero-h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(52px,8vw,96px);line-height:0.92;letter-spacing:0.5px;color:var(--fg);margin-bottom:24px;font-weight:400;}
+.hero-sub{font-size:16px;color:var(--fg2);line-height:1.8;max-width:600px;margin-bottom:36px;}
+.snapshot-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--rule-strong);border:1px solid var(--rule-strong);border-radius:4px;overflow:hidden;}
+.snap-cell{background:var(--bg2);padding:18px 20px;}
+[data-mode="dark"] .snap-cell{background:var(--bg3);}
+.snap-label{font-family:'DM Mono',monospace;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--fg3);margin-bottom:6px;}
+.snap-val{font-size:13px;color:var(--fg);font-weight:500;line-height:1.4;}
+
+/* SECTIONS */
+.section{padding:56px 5%;border-top:1px solid var(--rule);}
+.section-rule{border-top:2px solid var(--rule-strong);}
+.sec-label{font-family:'DM Mono',monospace;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--fg3);margin-bottom:10px;}
+
+/* h2 — section headings */
+h2.sec-h2{font-family:'Bebas Neue',sans-serif;font-size:clamp(30px,3.5vw,42px);letter-spacing:0.5px;color:var(--fg);margin-bottom:28px;line-height:1;font-weight:400;}
+
+.two{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start;}
+.card{background:var(--bg2);border:1px solid var(--rule);border-radius:6px;padding:28px;}
+[data-mode="dark"] .card{background:var(--bg3);}
+
+/* h3 — card headings */
+.card h3{font-family:'Bebas Neue',sans-serif;font-size:clamp(18px,2vw,22px);color:var(--fg);margin-bottom:12px;letter-spacing:0.5px;font-weight:400;}
+.card p{font-size:14px;color:var(--fg2);line-height:1.75;margin-bottom:12px;}
+.card ul{padding-left:18px;}
+.card ul li{font-size:14px;color:var(--fg2);line-height:1.75;margin-bottom:4px;}
+.card ul li::marker{color:var(--pop-text);}
+
+.placeholder{border:2px dashed var(--rule-strong);border-radius:6px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:32px 24px;min-height:300px;background:var(--bg2);}
+[data-mode="dark"] .placeholder{background:var(--bg3);}
+.placeholder-label{font-family:'DM Mono',monospace;font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--pop-text);margin-bottom:10px;}
+.placeholder p{font-size:13px;color:var(--fg3);line-height:1.6;max-width:220px;}
+
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--rule);border:1px solid var(--rule);border-radius:6px;overflow:hidden;}
+.step{background:var(--bg2);padding:24px 22px;}
+[data-mode="dark"] .step{background:var(--bg3);}
+.step-num{font-family:'DM Mono',monospace;font-size:11px;font-weight:700;color:var(--pop-text);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:10px;}
+
+/* h3 inside steps */
+.step h3{font-family:'Bebas Neue',sans-serif;font-size:clamp(17px,1.8vw,20px);letter-spacing:0.3px;color:var(--fg);margin-bottom:8px;font-weight:400;}
+.step p{font-size:13px;color:var(--fg3);line-height:1.6;}
+
+.outcomes{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:8px;}
+.outcome-card{border:1.5px solid var(--pop);border-radius:6px;padding:20px 18px;}
+
+/* h4 — outcome card headings */
+.outcome-card h4{font-family:'Bebas Neue',sans-serif;font-size:clamp(16px,1.8vw,20px);color:var(--pop-text);margin-bottom:8px;font-weight:400;}
+.outcome-card p{font-size:13px;color:var(--fg2);line-height:1.6;}
+
+.case-nav{display:flex;justify-content:space-between;align-items:center;padding:28px 5%;border-top:2px solid var(--rule-strong);background:var(--bg);}
+.case-nav a{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:1px;color:var(--pop-text);transition:opacity .2s;}
+.case-nav a:hover{opacity:.75;}
+.case-nav span{font-family:'DM Mono',monospace;font-size:12px;font-weight:700;color:var(--fg3);letter-spacing:1.5px;text-transform:uppercase;}
+
+@media(max-width:900px){
+  .two,.snapshot-grid,.steps,.outcomes{grid-template-columns:1fr;}
+}
+@media(prefers-reduced-motion:reduce){*{transition-duration:.01ms !important;}}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="index.html">Saisaa Ray</a>
+  <div class="nav-links">
+    <a href="index.html#work" class="back-link">← All Work</a>
+    <a href="index.html#contact">Contact</a>
+    <button class="mode-btn" onclick="toggleMode()" id="modeBtn">☾ Dark</button>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="hero-meta">UX/UI · Dashboard Design · Analytics</div>
+  <h1 class="hero-h1">Eigenlytics<br>Dashboard<br>Redesign</h1>
+  <p class="hero-sub">Improving analytical workflows, information hierarchy, and decision-making through clearer dashboard UX.</p>
+  <div class="snapshot-grid">
+    <div class="snap-cell"><div class="snap-label">Role</div><div class="snap-val">UX/UI Designer</div></div>
+    <div class="snap-cell"><div class="snap-label">Type</div><div class="snap-val">Dashboard Redesign</div></div>
+    <div class="snap-cell"><div class="snap-label">Focus</div><div class="snap-val">IA · Data Viz · Workflow</div></div>
+    <div class="snap-cell"><div class="snap-label">Tools</div><div class="snap-val">Figma</div></div>
+  </div>
+</header>
+
+<section class="section section-rule">
+  <div class="sec-label">01 — Problem</div>
+  <h2 class="sec-h2">The Challenge</h2>
+  <div class="card" style="max-width:720px;margin:0 auto;text-align:center;">
+    <p>Analytical dashboards often require users to interpret large volumes of information quickly. The existing interface presented challenges around dense layouts, competing visual priorities, fragmented navigation, and dashboard scanning behaviour.</p>
+    <ul style="list-style:none;padding:0;display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:8px;">
+      <li style="background:var(--bg3);border-radius:4px;padding:6px 14px;font-size:13px;color:var(--fg2);">High information density</li>
+      <li style="background:var(--bg3);border-radius:4px;padding:6px 14px;font-size:13px;color:var(--fg2);">Unclear KPI prioritisation</li>
+      <li style="background:var(--bg3);border-radius:4px;padding:6px 14px;font-size:13px;color:var(--fg2);">Navigation overload</li>
+      <li style="background:var(--bg3);border-radius:4px;padding:6px 14px;font-size:13px;color:var(--fg2);">Weak visual hierarchy</li>
+      <li style="background:var(--bg3);border-radius:4px;padding:6px 14px;font-size:13px;color:var(--fg2);">Fragmented analytical workflows</li>
+    </ul>
+  </div>
+</section>
+
+<section class="section">
+  <div class="sec-label">02 — My Role</div>
+  <h2 class="sec-h2">Scope of Work</h2>
+  <div class="card" style="max-width:720px;;margin:0 auto;text-align:center;">
+    <p>I worked across interface redesign, workflow simplification, visual hierarchy refinement, and usability-driven dashboard improvements. The objective was to create an interface that supports analytical decision-making without overwhelming users.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="sec-label">03 — Goals</div>
+  <h2 class="sec-h2">Design Goals</h2>
+  <div class="card" style="max-width:720px;margin:0 auto;text-align:center;">
+    <ul style="list-style:none;padding:0;display:flex;flex-wrap:wrap;gap:8px;justify-content:center;">
+      <li style="background:var(--bg3);border-radius:4px;padding:6px 14px;font-size:13px;color:var(--fg2);">Reduce cognitive load</li>
+      <li style="background:var(--bg3);border-radius:4px;padding:6px 14px;font-size:13px;color:var(--fg2);">Improve dashboard scanability</li>
+      <li style="background:var(--bg3);border-radius:4px;padding:6px 14px;font-size:13px;color:var(--fg2);">Strengthen KPI visibility</li>
+      <li style="background:var(--bg3);border-radius:4px;padding:6px 14px;font-size:13px;color:var(--fg2);">Support analytical workflows</li>
+      <li style="background:var(--bg3);border-radius:4px;padding:6px 14px;font-size:13px;color:var(--fg2);">Create clearer navigation patterns</li>
+    </ul>
+  </div>
+</section>
+
+<section class="section section-rule">
+  <div class="sec-label">04 — Process</div>
+  <h2 class="sec-h2">Design Decisions</h2>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">Step 01 —</div>
+      <h3>Information Architecture</h3>
+      <p>Content grouping and dashboard organisation were refined to improve discoverability and reduce interface fragmentation.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">Step 02 —</div>
+      <h3>Visual Hierarchy</h3>
+      <p>Priority metrics, analytical components, and navigation elements were redesigned using stronger hierarchy principles.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">Step 03 —</div>
+      <h3>Workflow Refinement</h3>
+      <p>Layouts restructured to support faster interpretation and smoother movement between data views.</p>
+    </div>
+  </div>
+  <div style="margin-top:20px;border-radius:6px;overflow:hidden;border:1px solid var(--rule);position:relative;width:100%;aspect-ratio:800/450;">
+    <iframe style="border:none;display:block;width:100%;height:100%;position:absolute;top:0;left:0;" src="https://embed.figma.com/proto/Fst0vYUeZr8W90pUc9LIKj/Dashboard-v1?page-id=0%3A1&node-id=803-2&p=f&viewport=-2531%2C-150%2C0.08&scaling=contain&content-scaling=fixed&starting-point-node-id=803%3A2&embed-host=share" allowfullscreen></iframe>
+  </div>
+</section>
+
+<section class="section">
+  <div class="sec-label">05 — Final Solution</div>
+  <h2 class="sec-h2">Key Improvements</h2>
+  <div class="outcomes">
+    <div class="outcome-card"><h4>Hierarchy</h4><p>Cleaner dashboard layout with improved KPI emphasis and reduced visual clutter.</p></div>
+    <div class="outcome-card"><h4>Readability</h4><p>Stronger analytics readability and clearer relationship between maps, charts, and metrics.</p></div>
+    <div class="outcome-card"><h4>Navigation</h4><p>More coherent navigation structure supporting smoother analytical workflows.</p></div>
+  </div>
+</section>
+
+<section class="section section-rule">
+  <div class="sec-label">06 — Reflection</div>
+  <h2 class="sec-h2">Takeaways</h2>
+  <div class="card" style="max-width:720px;">
+    <p>Designing analytical products requires balancing data density with usability. This redesign reinforced the importance of hierarchy, scanning behaviour, and workflow clarity within dashboard environments. It also highlighted how visual organisation can directly influence analytical comprehension and decision support.</p>
+  </div>
+</section>
+
+<div class="case-nav">
+  <a href="index.html">← Back to Portfolio</a>
+  <span>Case Study 01 / 03</span>
+  <a href="historiart_case_study.html">Next: HistoriArt →</a>
+</div>
+
+<script>
+function toggleMode(){
+  const html=document.documentElement;
+  const btn=document.getElementById('modeBtn');
+  html.dataset.mode=html.dataset.mode==='light'?'dark':'light';
+  btn.textContent=html.dataset.mode==='dark'?'☀ Light':'☾ Dark';
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en" data-mode="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Saisaa Ray — UX Researcher & Designer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --pop: #077c70; --pop-text: #077c70;
+  --bg:  #f5f3ef;
+  --bg2: #eceae4;
+  --bg3: #e0ddd5;
+  --fg:  #111111;
+  --fg2: #444444;
+  --fg3: #6f6f6f;
+  --rule: rgba(0,0,0,0.09);
+  --rule-strong: #111111;
+  --nav-bg: #f5f3efee;
+}
+[data-mode="dark"] {
+  --bg:  #1e1e1e; --bg2: #272727; --bg3: #303030;
+  --fg:  #e6e2da; --fg2: #a8a49c; --fg3: #989898; --pop-text: #09ac9b;
+  --rule: rgba(255,255,255,0.07);
+  --rule-strong: var(--pop);
+  --nav-bg: #1a1a1aee;
+}
+
+*,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg); color: var(--fg);
+  transition: background .3s, color .3s;
+  min-height: 100vh;
+}
+a { text-decoration: none; color: inherit; }
+
+/* ── NAV ── */
+nav {
+  position: sticky; top: 0; z-index: 100;
+  background: var(--nav-bg);
+  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1.5px solid var(--rule-strong);
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 0 5%; height: 60px;
+  transition: background .3s, border-color .3s;
+}
+.nav-logo {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 22px; letter-spacing: 2px; color: var(--fg);
+}
+.nav-links { display: flex; gap: 24px; align-items: center; }
+.nav-links a, .nav-cv-btn {
+  font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase;
+  color: var(--fg3); font-weight: 500; transition: color .2s;
+}
+.nav-links a:hover, .nav-cv-btn:hover { color: var(--pop-text); }
+.nav-cv-btn {
+  background: none; border: none; cursor: pointer;
+  font-family: 'DM Sans', sans-serif; padding: 0;
+}
+.mode-btn {
+  border: 1.5px solid var(--rule-strong);
+  background: transparent; color: var(--fg);
+  font-family: 'DM Mono', monospace; font-size: 11px;
+  padding: 5px 12px; border-radius: 4px; cursor: pointer;
+  letter-spacing: 1px; transition: all .2s;
+}
+.mode-btn:hover { background: var(--pop); border-color: var(--pop); color: #fff; }
+
+/* ── HERO ── */
+.hero {
+  display: flex; flex-direction: column;
+  align-items: center; text-align: center;
+  padding: 88px 5% 72px;
+  border-bottom: 1.5px solid var(--rule-strong);
+}
+.hero-greeting {
+  font-family: 'DM Mono', monospace;
+  font-size: 13px; letter-spacing: 2px; text-transform: uppercase;
+  color: var(--fg3); margin-bottom: 18px;
+}
+
+/* h1 — page title, largest element */
+h1.hero-h1 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(64px, 11vw, 120px);
+  line-height: 0.9; letter-spacing: 1px; color: var(--fg);
+  font-weight: 400; margin-bottom: 10px;
+}
+h1.hero-h1 .pop { color: var(--pop-text); display: block; }
+
+.hero-avail {
+  display: inline-flex; align-items: center; gap: 9px;
+  margin: 26px 0 32px;
+  font-family: 'DM Mono', monospace;
+  font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--fg2);
+}
+.hero-avail-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: #22c55e;
+  box-shadow: 0 0 0 3px rgba(34,197,94,.20);
+  animation: pulse 2.4s ease-in-out infinite; flex-shrink: 0;
+}
+@keyframes pulse {
+  0%,100% { box-shadow: 0 0 0 3px rgba(34,197,94,.20); }
+  50%      { box-shadow: 0 0 0 7px rgba(34,197,94,.06); }
+}
+.hero-desc { font-size: 16px; color: var(--fg2); line-height: 1.85; max-width: 560px; }
+
+/* ── SECTION STRUCTURE ── */
+.section-wrap { border-top: 1.5px solid var(--rule-strong); }
+.section-header { padding: 28px 5% 24px; border-bottom: 1px solid var(--rule); }
+
+/* h2 — section titles, clearly subordinate to h1 but visually prominent */
+h2.section-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(32px, 4vw, 48px);
+  letter-spacing: 1px; color: var(--fg);
+  font-weight: 400; line-height: 1;
+}
+
+/* ── WORK ── */
+.project-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; }
+.project-card {
+  padding: 36px 32px 28px;
+  border-right: 1px solid var(--rule);
+  background: var(--bg); transition: background .2s;
+  display: block; color: var(--fg); cursor: pointer;
+}
+.project-card:last-child { border-right: none; }
+.project-card:hover { background: var(--bg2); }
+.project-card:hover .card-arrow { background: var(--pop); color: #fff; border-color: var(--pop); }
+.card-num {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px; font-weight: 700; color: var(--pop-text); letter-spacing: 1.5px; margin-bottom: 16px;
+}
+
+/* h3 — card titles, subordinate to h2 section titles */
+h3.card-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(22px, 2.5vw, 30px);
+  letter-spacing: 0.5px; color: var(--fg);
+  margin-bottom: 10px; line-height: 1; font-weight: 400;
+}
+
+.card-desc { font-size: 13px; color: var(--fg3); line-height: 1.65; margin-bottom: 20px; }
+.card-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 24px; }
+.tag {
+  border: 1px solid var(--rule); font-size: 10px; letter-spacing: 1px;
+  text-transform: uppercase; padding: 4px 10px; border-radius: 3px; color: var(--fg3);
+}
+.card-arrow {
+  width: 32px; height: 32px; border-radius: 50%;
+  border: 1.5px solid var(--rule-strong);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px; color: var(--fg); transition: all .2s;
+}
+
+/* ── ABOUT + APPROACH ── */
+.ap-grid {
+  display: grid; grid-template-columns: 1.15fr 1fr;
+}
+.ap-left  { padding: 48px 5% 56px; border-right: 1px solid var(--rule); }
+.ap-right { padding: 48px 40px 56px; }
+
+.ap-sub-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
+  color: var(--fg3); margin-bottom: 14px;
+}
+.ap-left p, .ap-right p {
+  font-size: 15px; color: var(--fg2); line-height: 1.85; margin-bottom: 16px;
+}
+.skill-grid { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
+.skill-chip {
+  border: 1px solid var(--pop); color: var(--pop-text);
+  font-size: 11px; padding: 5px 12px; border-radius: 3px; letter-spacing: 0.5px;
+}
+.lang-list { list-style: none; display: flex; flex-direction: column; gap: 10px; margin-top: 16px; }
+.lang-row { display: flex; align-items: center; gap: 10px; font-size: 14px; color: var(--fg2); }
+.lang-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--pop); flex-shrink: 0; }
+.ap-right blockquote {
+  border-left: 2px solid var(--pop); padding-left: 20px; margin: 20px 0 24px;
+}
+.ap-right blockquote p { font-style: italic; margin-bottom: 0; }
+.ap-right blockquote p strong { color: var(--fg); font-style: normal; }
+
+/* ── CONTACT ── */
+.contact-inner {
+  padding: 72px 5% 84px; text-align: center;
+}
+
+/* h2 already defined above — reused here. Extra display tweak via utility class */
+h2.contact-display {
+  font-size: clamp(48px, 7vw, 88px);
+  letter-spacing: 2px; margin-bottom: 14px; line-height: 1;
+}
+
+.contact-desc {
+  font-size: 15px; color: var(--fg2); margin-bottom: 36px;
+  max-width: 480px; margin-left: auto; margin-right: auto;
+}
+.contact-email {
+  display: inline-block;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(26px, 4vw, 48px);
+  color: var(--pop-text); letter-spacing: 1px;
+  border-bottom: 2px solid var(--pop); padding-bottom: 4px;
+  transition: opacity .2s;
+}
+.contact-email:hover { opacity: .75; }
+
+/* ── FOOTER ── */
+footer {
+  border-top: 1.5px solid var(--rule-strong);
+  padding: 16px 5%; display: flex; justify-content: space-between; align-items: center;
+}
+footer span { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--fg3); letter-spacing: 1px; }
+footer a { font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--pop-text); font-weight: 700; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+  .project-grid { grid-template-columns: 1fr; }
+  .project-card { border-right: none; border-bottom: 1px solid var(--rule); }
+  .ap-grid { grid-template-columns: 1fr; }
+  .ap-left { border-right: none; border-bottom: 1px solid var(--rule); }
+  .nav-links .nav-hide { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-avail-dot { animation: none; }
+  * { transition-duration: 0.01ms !important; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="nav-logo" aria-label="Saisaa Ray home">Saisaa Ray</a>
+  <div class="nav-links" role="navigation" aria-label="Primary navigation">
+    <a href="#about" class="nav-hide">About</a>
+    <a href="#work" class="nav-hide">Work</a>
+    <button class="nav-cv-btn" onclick="downloadCV()" aria-label="Download CV">CV</button>
+    <a href="#contact">Contact</a>
+    <button class="mode-btn" onclick="toggleMode()" id="modeBtn" aria-label="Toggle dark mode">☾ Dark</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+  <p class="hero-greeting">Hi, I'm Saisaa.</p>
+  <h1 class="hero-h1">
+    I'm a
+    <span class="pop">UX Designer</span>
+  </h1>
+  <div class="hero-avail" aria-label="Available to work in 2026">
+    <span class="hero-avail-dot" aria-hidden="true"></span>
+    Available to work · 2026
+  </div>
+  <p class="hero-desc">
+    I design research-led, accessible experiences — shaped by a background in
+    language, culture, and digital humanities. I work across UX research, UX/UI
+    design, and product strategy, wherever the problem needs solving.
+  </p>
+</header>
+
+<!-- WORK -->
+<section id="work" class="section-wrap">
+  <div class="section-header">
+    <h2 class="section-title">Selected Work</h2>
+  </div>
+  <div class="project-grid">
+
+    <a class="project-card" href="eigenlytics_case_study.html" aria-label="Eigenlytics — Analytics dashboard redesign">
+      <div class="card-num" aria-hidden="true">01 —</div>
+      <h3 class="card-title">Eigenlytics</h3>
+      <p class="card-desc">Analytics dashboard redesign — improving workflow clarity, information hierarchy, and decision-making for data-heavy interfaces.</p>
+      <div class="card-tags">
+        <span class="tag">Dashboard</span><span class="tag">UX/UI</span><span class="tag">Analytics</span>
+      </div>
+      <div class="card-arrow" aria-hidden="true">→</div>
+    </a>
+
+    <a class="project-card" href="historiart_case_study.html" aria-label="HistoriArt — Mobile UX for cultural discovery">
+      <div class="card-num" aria-hidden="true">02 —</div>
+      <h3 class="card-title">HistoriArt</h3>
+      <p class="card-desc">Mobile UX case study for accessible art and cultural discovery — balancing education, storytelling, and usability.</p>
+      <div class="card-tags">
+        <span class="tag">Mobile UX</span><span class="tag">Research</span><span class="tag">Cultural UX</span>
+      </div>
+      <div class="card-arrow" aria-hidden="true">→</div>
+    </a>
+
+    <a class="project-card" href="bluesky_case_study.html" aria-label="Bluesky — Usability and accessibility evaluation">
+      <div class="card-num" aria-hidden="true">03 —</div>
+      <h3 class="card-title">Bluesky</h3>
+      <p class="card-desc">Usability, accessibility, and sustainability evaluation of the Bluesky social platform.</p>
+      <div class="card-tags">
+        <span class="tag">Evaluation</span><span class="tag">Accessibility</span><span class="tag">Research</span>
+      </div>
+      <div class="card-arrow" aria-hidden="true">→</div>
+    </a>
+
+  </div>
+</section>
+
+<!-- ABOUT + APPROACH -->
+<section id="about" class="section-wrap">
+  <div class="section-header">
+    <h2 class="section-title">About &amp; Approach</h2>
+  </div>
+  <div class="ap-grid">
+    <div class="ap-left">
+      <div class="ap-sub-label">Background</div>
+      <p>My background spans UX research, UX/UI design, AI evaluation, publishing, multilingual communication, and digital humanities. I'm currently completing an <strong>MSc in Digital Humanities at University College London (UCL)</strong> — combining advanced research methods, human-centred design, NLP, data visualisation, and responsible AI.</p>
+      <p>Educated in Comparative Literature (MA &amp; BA, Jadavpur University), I bring a humanistic lens to design problems — attending closely to language, context, and the people behind the data.</p>
+
+      <div class="ap-sub-label" style="margin-top:28px;">Core Skills</div>
+      <div class="skill-grid">
+        <span class="skill-chip">UX Research</span>
+        <span class="skill-chip">UX/UI Design</span>
+        <span class="skill-chip">Figma</span>
+        <span class="skill-chip">Accessibility (WCAG)</span>
+        <span class="skill-chip">Usability Testing</span>
+        <span class="skill-chip">HTML / CSS</span>
+        <span class="skill-chip">Wireframing</span>
+        <span class="skill-chip">AI Evaluation</span>
+        <span class="skill-chip">Data Visualisation</span>
+        <span class="skill-chip">NLP</span>
+      </div>
+
+      <div class="ap-sub-label" style="margin-top:28px;">Languages</div>
+      <ul class="lang-list">
+        <li class="lang-row"><div class="lang-dot" aria-hidden="true"></div>English — Fluent</li>
+        <li class="lang-row"><div class="lang-dot" aria-hidden="true"></div>Bengali — Native</li>
+        <li class="lang-row"><div class="lang-dot" aria-hidden="true"></div>Hindi — Native</li>
+        <li class="lang-row"><div class="lang-dot" aria-hidden="true"></div>Spanish — B2</li>
+        <li class="lang-row"><div class="lang-dot" aria-hidden="true"></div>Chinese — A1</li>
+      </ul>
+    </div>
+
+    <div class="ap-right">
+      <div class="ap-sub-label">My Approach</div>
+      <p>I trained as a comparatist before I trained as a designer. Reading across languages and cultures taught me to notice what gets lost in translation — and to ask who a system was built for, and who it quietly leaves out.</p>
+      <blockquote>
+        <p><strong>Where does a product break down for someone it wasn't designed for?</strong> That's the question I bring to every brief.</p>
+      </blockquote>
+      <p>Good design, to me, is usable, accessible, and sustainable by default — not bolted on as an afterthought, but treated as the starting constraint. My MSc in Digital Humanities deepens that commitment: bridging research methods, ethical AI, and human-centred practice.</p>
+      <p>I work across research, interface design, and strategy — wherever the problem sits.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="section-wrap">
+  <div class="section-header">
+    <h2 class="section-title">Contact</h2>
+  </div>
+  <div class="contact-inner">
+<<<<<<< HEAD
+    <h2 class="section-title contact-display">Let's Work Together</h2>
+    <p class="contact-desc">Interested in accessibility, education, digital humanities, or research-led design? I'd love to talk.</p>
+    <a class="contact-email" href="saisaa.ray.25@ucl.ac.uk">saisaa.ray.25@ucl.ac.uk</a>
+=======
+    <h2>Let's Work Together</h2>
+    <p>Interested in accessibility, education, digital humanities, or research-led design? I'd love to talk.</p>
+    <div class="contact-email">saisaa.ray.25@ucl.ac.uk</div>
+>>>>>>> 01957b16962a4fe1e241394595d42b3073a6d6e6
+  </div>
+</section>
+
+<footer>
+  <span>© 2026 Saisaa Ray</span>
+  <a href="#work">Back to top ↑</a>
+</footer>
+
+<a id="cv-dl" href="Saisaa_Ray_CV.pdf" download="Saisaa_Ray_CV.pdf" style="display:none;" aria-hidden="true" tabindex="-1"></a>
+
+<script>
+function toggleMode() {
+  const html = document.documentElement;
+  const btn  = document.getElementById('modeBtn');
+  html.dataset.mode = html.dataset.mode === 'light' ? 'dark' : 'light';
+  btn.textContent   = html.dataset.mode === 'dark'  ? '☀ Light' : '☾ Dark';
+}
+function downloadCV() { document.getElementById('cv-dl').click(); }
+</script>
+</body>
+</html>

@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en" data-mode="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bluesky — Saisaa Ray</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --pop:#077c70; --pop-text:#077c70;
+  --bg:#f5f3ef; --bg2:#eceae4; --bg3:#e0ddd5;
+  --fg:#111111; --fg2:#444444; --fg3:#6f6f6f;
+  --rule:rgba(0,0,0,0.10); --rule-strong:#111111; --nav-bg:#f5f3efee;
+}
+[data-mode="dark"] {
+  --bg:#1e1e1e; --bg2:#272727; --bg3:#303030;
+  --fg:#e6e2da; --fg2:#a8a49c; --fg3:#989898; --pop-text:#09ac9b;
+  --rule:rgba(255,255,255,0.08); --rule-strong:var(--pop); --nav-bg:#1a1a1aee;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--fg);transition:background .3s,color .3s;}
+a{text-decoration:none;color:inherit;}
+
+nav{position:sticky;top:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:2px solid var(--rule-strong);display:flex;justify-content:space-between;align-items:center;padding:0 5%;height:60px;transition:background .3s,border-color .3s;}
+.nav-logo{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:2px;color:var(--fg);}
+.nav-links{display:flex;gap:24px;align-items:center;}
+.nav-links a{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--fg3);font-weight:500;transition:color .2s;}
+.nav-links a:hover{color:var(--pop-text);}
+.back-link{color:var(--pop-text) !important;font-weight:700;}
+.mode-btn{border:1.5px solid var(--rule-strong);background:transparent;color:var(--fg);font-family:'DM Mono',monospace;font-size:11px;padding:5px 12px;border-radius:4px;cursor:pointer;letter-spacing:1px;transition:all .2s;}
+.mode-btn:hover{background:var(--pop);border-color:var(--pop);color:#fff;}
+
+.hero{padding:64px 5% 48px;border-bottom:1px solid var(--rule);}
+.hero-meta{font-family:'DM Mono',monospace;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--pop-text);margin-bottom:20px;}
+
+/* h1 — case study title */
+h1.hero-h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(52px,8vw,96px);line-height:0.92;letter-spacing:0.5px;color:var(--fg);margin-bottom:24px;font-weight:400;}
+.hero-sub{font-size:16px;color:var(--fg2);line-height:1.8;max-width:600px;margin-bottom:36px;}
+.snapshot-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--rule-strong);border:1px solid var(--rule-strong);border-radius:4px;overflow:hidden;}
+.snap-cell{background:var(--bg2);padding:18px 20px;}
+[data-mode="dark"] .snap-cell{background:var(--bg3);}
+.snap-label{font-family:'DM Mono',monospace;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--fg3);margin-bottom:6px;}
+.snap-val{font-size:13px;color:var(--fg);font-weight:500;line-height:1.4;}
+
+.section{padding:56px 5%;border-top:1px solid var(--rule);}
+.section-rule{border-top:2px solid var(--rule-strong);}
+.sec-label{font-family:'DM Mono',monospace;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--fg3);margin-bottom:10px;}
+
+/* h2 — section headings */
+h2.sec-h2{font-family:'Bebas Neue',sans-serif;font-size:clamp(30px,3.5vw,42px);letter-spacing:0.5px;color:var(--fg);margin-bottom:28px;line-height:1;font-weight:400;}
+
+.two{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start;}
+.card{background:var(--bg2);border:1px solid var(--rule);border-radius:6px;padding:28px;}
+[data-mode="dark"] .card{background:var(--bg3);}
+
+/* h3 — card headings */
+.card h3{font-family:'Bebas Neue',sans-serif;font-size:clamp(18px,2vw,22px);color:var(--fg);margin-bottom:12px;letter-spacing:0.5px;font-weight:400;}
+.card p{font-size:14px;color:var(--fg2);line-height:1.75;margin-bottom:12px;}
+.card p:last-child{margin-bottom:0;}
+.card ul{padding-left:18px;}
+.card ul li{font-size:14px;color:var(--fg2);line-height:1.75;margin-bottom:4px;}
+.card ul li::marker{color:var(--pop-text);}
+.card code{font-family:'DM Mono',monospace;font-size:12px;background:var(--bg3);padding:2px 6px;border-radius:3px;color:var(--pop-text);}
+
+.highlight{border-left:3px solid var(--pop);background:var(--bg3);padding:16px 18px;border-radius:4px;margin-top:16px;}
+[data-mode="dark"] .highlight{background:var(--bg2);}
+.highlight strong{display:block;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--pop-text);margin-bottom:8px;}
+.highlight p,.highlight li{font-size:13px;color:var(--fg2);margin-bottom:4px;}
+.highlight ul{padding-left:16px;}
+
+.persona-role{font-family:'DM Mono',monospace;font-size:11px;font-weight:700;color:var(--pop-text);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px;}
+
+.findings{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:24px;}
+.finding-card{border:1.5px solid var(--pop);border-radius:6px;padding:20px 18px;}
+
+/* h4 — finding card stats */
+.finding-card h4{font-family:'Bebas Neue',sans-serif;font-size:clamp(22px,2.5vw,32px);color:var(--pop-text);margin-bottom:8px;font-weight:400;}
+.finding-card p{font-size:13px;color:var(--fg2);line-height:1.6;}
+
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--rule);border:1px solid var(--rule);border-radius:6px;overflow:hidden;}
+.step{background:var(--bg2);padding:24px 22px;}
+[data-mode="dark"] .step{background:var(--bg3);}
+.step-num{font-family:'DM Mono',monospace;font-size:11px;font-weight:700;color:var(--pop-text);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:10px;}
+
+/* h3 inside steps */
+.step h3{font-family:'Bebas Neue',sans-serif;font-size:clamp(17px,1.8vw,20px);letter-spacing:0.3px;color:var(--fg);margin-bottom:8px;font-weight:400;}
+.step p{font-size:13px;color:var(--fg3);line-height:1.6;}
+
+.case-nav{display:flex;justify-content:space-between;align-items:center;padding:28px 5%;border-top:2px solid var(--rule-strong);background:var(--bg);}
+.case-nav a{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:1px;color:var(--pop-text);transition:opacity .2s;}
+.case-nav a:hover{opacity:.75;}
+.case-nav span{font-family:'DM Mono',monospace;font-size:12px;font-weight:700;color:var(--fg3);letter-spacing:1.5px;text-transform:uppercase;}
+
+@media(max-width:900px){
+  .two,.snapshot-grid,.findings,.steps{grid-template-columns:1fr;}
+}
+@media(prefers-reduced-motion:reduce){*{transition-duration:.01ms !important;}}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="index.html">Saisaa Ray</a>
+  <div class="nav-links">
+    <a href="index.html#work" class="back-link">← All Work</a>
+    <a href="index.html#contact">Contact</a>
+    <button class="mode-btn" onclick="toggleMode()" id="modeBtn">☾ Dark</button>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="hero-meta">UX Evaluation · Accessibility · Sustainability</div>
+  <h1 class="hero-h1">Bluesky —<br>UX, Accessibility &amp;<br>Sustainability</h1>
+  <p class="hero-sub">A research-led evaluation exploring how usability, accessibility, and sustainability shape the experience of decentralised social networking systems.</p>
+  <div class="snapshot-grid">
+    <div class="snap-cell"><div class="snap-label">Role</div><div class="snap-val">UX Researcher / Evaluator</div></div>
+    <div class="snap-cell"><div class="snap-label">Type</div><div class="snap-val">Product Evaluation</div></div>
+    <div class="snap-cell"><div class="snap-label">Frameworks</div><div class="snap-val">Nielsen · WCAG 2.2 · Sustainable Web</div></div>
+    <div class="snap-cell"><div class="snap-label">Tools</div><div class="snap-val">WAVE · Lighthouse · W3C · Carbon Calc</div></div>
+  </div>
+</header>
+
+<section class="section section-rule">
+  <div class="sec-label">01 — Problem</div>
+  <h2 class="sec-h2">The Challenge</h2>
+  <div class="two">
+    <div class="card">
+      <p>Bluesky's decentralised architecture — built on the AT Protocol — distributes identity hosting, moderation, and feed ranking across independent actors. This modularity serves the platform's decentralisation goals, but the interface deliberately mirrors Twitter/X to ease onboarding — concealing real architectural complexity underneath.</p>
+      <div class="highlight">
+        <strong>The gap between intent and behaviour</strong>
+        <p>Bluesky positions itself for casual users, creators, and power users alike. But adoption data tells a different story: <strong>98.9% of users rely on the default identity provider</strong>, and only <strong>1.1%</strong> adopt decentralised identity hosting. Most people want convenience, not autonomy — yet the interface is built as if everyone wants both.</p>
+      </div>
+    </div>
+    <div class="card">
+      <h3>Evaluation Scope</h3>
+      <p>This evaluation examined Bluesky's homepage and core interactions across three lenses using empirical tools rather than opinion:</p>
+      <ul>
+        <li><strong>Usability</strong> — Nielsen's Heuristic Evaluation across three personas</li>
+        <li><strong>Accessibility</strong> — WCAG 2.2 audit via AccessibilityChecker.org and WAVE</li>
+        <li><strong>Sustainability</strong> — Website Carbon Calculator, Lighthouse, Wayback Machine, hosting-stack scans</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="sec-label">02 — User Lens</div>
+  <h2 class="sec-h2">Personas &amp; Behaviour</h2>
+  <p style="font-size:14px;color:var(--fg2);max-width:680px;margin-bottom:28px;line-height:1.75;">Three personas were evaluated against Nielsen's usability heuristics to surface how Bluesky's decentralised affordances are actually experienced, versus how they're designed to be experienced.</p>
+  <div class="two" style="margin-bottom:20px;">
+    <div class="card">
+      <div class="persona-role">Persona 01 —</div>
+      <h3>Nikita, Creator</h3>
+      <p><strong>Pain point:</strong> No analytics, reach indicators, or insight into how posts travel across feeds.</p>
+      <p><strong>Heuristics violated:</strong> Visibility of system status; match between system and real-world expectations.</p>
+      <div class="highlight">
+        <strong>Proposed Solution</strong>
+        <p>Simple, anonymous reach indicators — e.g. "your post appeared in 12 feeds today" — based on aggregated feed-generator counts. Gives creators feedback without centralising data or copying platform-style analytics.</p>
+      </div>
+    </div>
+    <div class="card">
+      <div class="persona-role">Persona 02 —</div>
+      <h3>Ben, Regular Consumer</h3>
+      <p><strong>Pain point:</strong> Feed discovery is cumbersome; many feeds feel unreliable or low quality.</p>
+      <p><strong>Heuristics violated:</strong> Consistency and standards; recognition rather than recall.</p>
+      <div class="highlight">
+        <strong>Proposed Solution</strong>
+        <p>Feed metadata — update frequency, ranking logic, operator identity — similar to how Matrix clients reveal which homeserver routes traffic. Helps users choose trustworthy sources without added cognitive load.</p>
+      </div>
+    </div>
+  </div>
+  <div class="card" style="max-width:100%;">
+    <div class="persona-role">Persona 03 —</div>
+    <h3>Alex, Power User</h3>
+    <p><strong>Pain point:</strong> Information overload from multiple feeds and moderation tools; inconsistent label vocabularies.</p>
+    <p><strong>Heuristics violated:</strong> Consistency and standards; user control and freedom; error prevention.</p>
+    <div class="highlight">
+      <strong>Proposed Solution</strong>
+      <p>A unified moderation and feed dashboard that visually groups active feeds, labelers, mutelists, and blocklists, and flags overlaps or conflicts — centralising visibility, not moderation, so power users can manage complexity without juggling disjoint interfaces.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section section-rule">
+  <div class="sec-label">03 — Usability Evaluation</div>
+  <h2 class="sec-h2">Heuristic Findings</h2>
+  <div class="two">
+    <div class="card">
+      <p>Using Nielsen's Heuristic Evaluation framework across all three personas, the same root cause kept recurring: <strong>decentralisation requires conceptual knowledge most users don't have, and the interface offers no scaffolding for it.</strong></p>
+      <ul>
+        <li>Creators get no feedback loop on reach or visibility</li>
+        <li>Feed discovery relies on third-party tools, not the platform itself</li>
+        <li>Moderation and labelling tools use inconsistent vocabulary</li>
+        <li>Recognition-over-recall failures increase cognitive load for all three personas</li>
+      </ul>
+      <div class="highlight">
+        <strong>Design Recommendations</strong>
+        <ul>
+          <li>Anonymous creator reach indicators</li>
+          <li>Transparent feed metadata (update frequency, ranking logic, operator)</li>
+          <li>Unified moderation &amp; feed visibility dashboard</li>
+        </ul>
+      </div>
+    </div>
+    <div class="card">
+      <h3>Security &amp; Data Handling</h3>
+      <p>Bluesky uses HTTPS and secure login, but decentralisation complicates privacy expectations. Relay and AppView services act as centralisation bottlenecks — single points of failure in an otherwise distributed system.</p>
+      <p>In November 2024, <strong>roughly 1 million public posts were scraped and reused for AI training</strong> without user consent — exposing a governance gap in public-by-default APIs that decentralisation alone doesn't solve.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="sec-label">04 — Accessibility Audit</div>
+  <h2 class="sec-h2">WCAG 2.2 Compliance</h2>
+  <div class="findings">
+    <div class="finding-card"><h4>23%</h4><p>Accessibility score via AccessibilityChecker.org — well below WCAG 2.2 Level AA compliance.</p></div>
+    <div class="finding-card"><h4>233+</h4><p>Critical issues identified in the audit. The volume and pattern indicate substantial failures.</p></div>
+    <div class="finding-card"><h4>0</h4><p>Published accessibility statements — no documentation of compliance level or known barriers exists.</p></div>
+  </div>
+  <div class="two">
+    <div class="card">
+      <p>The audit revealed accessibility problems that are structural, not cosmetic:</p>
+      <ul>
+        <li>Empty <code>aria-label</code> attributes on key controls — fails WCAG 4.1.2</li>
+        <li>Like/repost counters in grey-on-grey, below 4.5:1 contrast minimum — fails WCAG 1.4.3</li>
+        <li>Editorial images in news previews missing alt text — fails WCAG 1.1.1</li>
+        <li>No semantic landmarks (<code>&lt;main&gt;</code>, <code>&lt;nav&gt;</code>, <code>&lt;aside&gt;</code>) — forces linear navigation for assistive tech</li>
+        <li>Missing <code>lang</code> attribute on <code>&lt;html&gt;</code> — fails WCAG 3.1.1</li>
+      </ul>
+    </div>
+    <div class="card">
+      <p>Mapped back to the personas, these failures translate into broken journeys, not abstract violations:</p>
+      <ul>
+        <li><strong>Ben</strong> hits friction from unlabeled controls and low-contrast text</li>
+        <li><strong>Alex</strong> can compensate via device-level settings, but gets no in-app guidance</li>
+        <li><strong>Nikita</strong> can't tell how accessible her own content is to the audiences she's trying to reach</li>
+      </ul>
+      <p>Accessibility on Bluesky currently depends on user expertise rather than platform responsibility — which undercuts the inclusivity a decentralised, open platform claims to offer.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section section-rule">
+  <div class="sec-label">05 — Sustainability &amp; Performance</div>
+  <h2 class="sec-h2">Environmental Evaluation</h2>
+  <div class="findings">
+    <div class="finding-card"><h4>Grade F</h4><p>Website Carbon Calculator rating — Bluesky's homepage produces more CO₂ per visit than roughly 84% of tested sites.</p></div>
+    <div class="finding-card"><h4>2022 →</h4><p>Earliest Wayback Machine capture — the homepage has a stable archival presence, though JS-heavy single-page apps are often only partially preserved.</p></div>
+    <div class="finding-card"><h4>No Evidence</h4><p>Result of a hosting-stack transparency scan — no CDN or server metadata is publicly detectable, so energy/carbon claims can't be verified.</p></div>
+  </div>
+  <div class="two">
+    <div class="card">
+      <p>Lighthouse runs (mobile and desktop) consistently surfaced the same issues:</p>
+      <ul>
+        <li>Unused JavaScript and render-blocking resources</li>
+        <li>Large Cumulative Layout Shift (CLS)</li>
+        <li>Inefficient caching policies</li>
+        <li>Unoptimised images and unused CSS</li>
+      </ul>
+      <p>These compound into higher client-side CPU usage and data transfer — greater energy draw, especially on low-power mobile hardware.</p>
+    </div>
+    <div class="card">
+      <h3>Long-term Viability</h3>
+      <p>A broken-link check found no significant failures — a positive sign for structural stability. But other signals point the other way:</p>
+      <ul>
+        <li>Significant CLS suggests structural volatility undermining both accessibility and archival fidelity</li>
+        <li>Heavy JS reliance with large unused payloads increases technical debt over time</li>
+        <li>No publicly documented strategy for longevity, maintainability, or sustainable hosting</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="sec-label">06 — Technical Validation</div>
+  <h2 class="sec-h2">Structural Issues</h2>
+  <div class="two">
+    <div class="card">
+      <h3>Critical Issue</h3>
+      <p>W3C validator analysis found the <code>&lt;html&gt;</code> tag lacks a language declaration, preventing screen readers from applying correct pronunciation rules — a real barrier for visually impaired users.</p>
+      <div class="highlight">
+        <strong>Fix</strong>
+        <p><code>&lt;html lang="en"&gt;</code></p>
+      </div>
+    </div>
+    <div class="card">
+      <p>Five further markup errors were identified:</p>
+      <ul>
+        <li>Missing content in <code>&lt;meta name="theme-color"&gt;</code></li>
+        <li>Empty <code>href=""</code> in the ActivityPub link</li>
+        <li>Missing <code>rel</code> attribute on a link element</li>
+        <li>Unclosed <code>&lt;noscript&gt;</code> tags</li>
+      </ul>
+      <p>The real takeaway: Bluesky's substantive UX problems are <strong>conceptual, not syntactic</strong> — they live in information architecture, not HTML compliance.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section section-rule">
+  <div class="sec-label">07 — Recommendations</div>
+  <h2 class="sec-h2">Design Actions</h2>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">Rec 01 —</div>
+      <h3>Onboarding &amp; Transparency</h3>
+      <p>Improve onboarding around decentralised concepts and increase transparency of feeds, ranking logic, and moderation systems.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">Rec 02 —</div>
+      <h3>Accessibility &amp; Semantics</h3>
+      <p>Strengthen semantic HTML, address WCAG compliance gaps, and publish accessibility documentation for accountability.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">Rec 03 —</div>
+      <h3>Performance &amp; Governance</h3>
+      <p>Optimise front-end resources, reduce unused scripts, and increase infrastructure transparency and governance clarity.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="sec-label">08 — Reflection</div>
+  <h2 class="sec-h2">Takeaways</h2>
+  <div class="card" style="max-width:720px;">
+    <p>Bluesky's evaluation raises a question bigger than one platform: can decentralised systems stay usable, accessible, and sustainable as they scale — or does technical openness inevitably trade off against ease of use?</p>
+    <p>The adoption data is the clearest signal: 98.9% of users default to the path of least resistance. Autonomy that requires expertise to access isn't really autonomy for most people. For decentralisation to fulfil its democratic promise, technical openness needs to be matched with clearer onboarding, transparency layers, and accessible-by-default scaffolding.</p>
+  </div>
+</section>
+
+<div class="case-nav">
+  <a href="historiart_case_study.html">← HistoriArt</a>
+  <span>Case Study 03 / 03</span>
+  <a href="index.html">Back to Portfolio →</a>
+</div>
+
+<script>
+function toggleMode(){
+  const html=document.documentElement;
+  const btn=document.getElementById('modeBtn');
+  html.dataset.mode=html.dataset.mode==='light'?'dark':'light';
+  btn.textContent=html.dataset.mode==='dark'?'☀ Light':'☾ Dark';
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en" data-mode="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HistoriArt — Saisaa Ray</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --pop:#077c70; --pop-text:#077c70;
+  --bg:#f5f3ef; --bg2:#eceae4; --bg3:#e0ddd5;
+  --fg:#111111; --fg2:#444444; --fg3:#6f6f6f;
+  --rule:rgba(0,0,0,0.10); --rule-strong:#111111; --nav-bg:#f5f3efee;
+}
+[data-mode="dark"] {
+  --bg:#1e1e1e; --bg2:#272727; --bg3:#303030;
+  --fg:#e6e2da; --fg2:#a8a49c; --fg3:#989898; --pop-text:#09ac9b;
+  --rule:rgba(255,255,255,0.08); --rule-strong:var(--pop); --nav-bg:#1a1a1aee;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--fg);transition:background .3s,color .3s;}
+a{text-decoration:none;color:inherit;}
+
+nav{position:sticky;top:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:2px solid var(--rule-strong);display:flex;justify-content:space-between;align-items:center;padding:0 5%;height:60px;transition:background .3s,border-color .3s;}
+.nav-logo{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:2px;color:var(--fg);}
+.nav-links{display:flex;gap:24px;align-items:center;}
+.nav-links a{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--fg3);font-weight:500;transition:color .2s;}
+.nav-links a:hover{color:var(--pop-text);}
+.back-link{color:var(--pop-text) !important;font-weight:700;}
+.mode-btn{border:1.5px solid var(--rule-strong);background:transparent;color:var(--fg);font-family:'DM Mono',monospace;font-size:11px;padding:5px 12px;border-radius:4px;cursor:pointer;letter-spacing:1px;transition:all .2s;}
+.mode-btn:hover{background:var(--pop);border-color:var(--pop);color:#fff;}
+
+.hero{padding:64px 5% 48px;border-bottom:1px solid var(--rule);}
+.hero-meta{font-family:'DM Mono',monospace;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--pop-text);margin-bottom:20px;}
+
+/* h1 — case study title */
+h1.hero-h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(52px,8vw,96px);line-height:0.92;letter-spacing:0.5px;color:var(--fg);margin-bottom:24px;font-weight:400;}
+.hero-sub{font-size:16px;color:var(--fg2);line-height:1.8;max-width:600px;margin-bottom:36px;}
+.snapshot-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--rule-strong);border:1px solid var(--rule-strong);border-radius:4px;overflow:hidden;}
+.snap-cell{background:var(--bg2);padding:18px 20px;}
+[data-mode="dark"] .snap-cell{background:var(--bg3);}
+.snap-label{font-family:'DM Mono',monospace;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--fg3);margin-bottom:6px;}
+.snap-val{font-size:13px;color:var(--fg);font-weight:500;line-height:1.4;}
+
+.section{padding:56px 5%;border-top:1px solid var(--rule);}
+.section-rule{border-top:2px solid var(--rule-strong);}
+.sec-label{font-family:'DM Mono',monospace;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--fg3);margin-bottom:10px;}
+
+/* h2 — section headings */
+h2.sec-h2{font-family:'Bebas Neue',sans-serif;font-size:clamp(30px,3.5vw,42px);letter-spacing:0.5px;color:var(--fg);margin-bottom:28px;line-height:1;font-weight:400;}
+
+.two{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start;}
+.card{background:var(--bg2);border:1px solid var(--rule);border-radius:6px;padding:28px;}
+[data-mode="dark"] .card{background:var(--bg3);}
+
+/* h3 — card headings */
+.card h3{font-family:'Bebas Neue',sans-serif;font-size:clamp(18px,2vw,22px);color:var(--fg);margin-bottom:12px;letter-spacing:0.5px;font-weight:400;}
+.card p{font-size:14px;color:var(--fg2);line-height:1.75;margin-bottom:12px;}
+.card ul{padding-left:18px;}
+.card ul li{font-size:14px;color:var(--fg2);line-height:1.75;margin-bottom:4px;}
+.card ul li::marker{color:var(--pop-text);}
+
+.placeholder{border:2px dashed var(--rule-strong);border-radius:6px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:32px 24px;min-height:300px;background:var(--bg2);}
+[data-mode="dark"] .placeholder{background:var(--bg3);}
+.placeholder-label{font-family:'DM Mono',monospace;font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--pop-text);margin-bottom:10px;}
+.placeholder p{font-size:13px;color:var(--fg3);line-height:1.6;max-width:220px;}
+
+.insights{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:var(--rule);border:1px solid var(--rule);border-radius:6px;overflow:hidden;margin-bottom:24px;}
+.insight{background:var(--bg2);padding:20px 16px;}
+[data-mode="dark"] .insight{background:var(--bg3);}
+.insight p{font-size:12px;color:var(--fg2);line-height:1.5;}
+
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--rule);border:1px solid var(--rule);border-radius:6px;overflow:hidden;}
+.step{background:var(--bg2);padding:24px 22px;}
+[data-mode="dark"] .step{background:var(--bg3);}
+.step-num{font-family:'DM Mono',monospace;font-size:11px;font-weight:700;color:var(--pop-text);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:10px;}
+
+/* h3 inside steps */
+.step h3{font-family:'Bebas Neue',sans-serif;font-size:clamp(17px,1.8vw,20px);letter-spacing:0.3px;color:var(--fg);margin-bottom:8px;font-weight:400;}
+.step p{font-size:13px;color:var(--fg3);line-height:1.6;}
+
+.outcomes{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+.outcome-card{border:1.5px solid var(--pop);border-radius:6px;padding:20px 18px;}
+
+/* h4 — outcome card headings */
+.outcome-card h4{font-family:'Bebas Neue',sans-serif;font-size:clamp(16px,1.8vw,20px);color:var(--pop-text);margin-bottom:8px;font-weight:400;}
+.outcome-card p{font-size:13px;color:var(--fg2);line-height:1.6;}
+
+.case-nav{display:flex;justify-content:space-between;align-items:center;padding:28px 5%;border-top:2px solid var(--rule-strong);background:var(--bg);}
+.case-nav a{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:1px;color:var(--pop-text);transition:opacity .2s;}
+.case-nav a:hover{opacity:.75;}
+.case-nav span{font-family:'DM Mono',monospace;font-size:12px;font-weight:700;color:var(--fg3);letter-spacing:1.5px;text-transform:uppercase;}
+
+@media(max-width:900px){
+  .two,.snapshot-grid,.steps,.outcomes,.insights{grid-template-columns:1fr;}
+}
+@media(prefers-reduced-motion:reduce){*{transition-duration:.01ms !important;}}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="index.html">Saisaa Ray</a>
+  <div class="nav-links">
+    <a href="index.html#work" class="back-link">← All Work</a>
+    <a href="index.html#contact">Contact</a>
+    <button class="mode-btn" onclick="toggleMode()" id="modeBtn">☾ Dark</button>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="hero-meta">UX Research · Mobile Design · Cultural UX</div>
+  <h1 class="hero-h1">HistoriArt —<br>Art Through<br>Storytelling</h1>
+  <p class="hero-sub">Designing a mobile experience that helps users explore artworks, cultural history, and learning experiences through more intuitive and engaging interaction design.</p>
+  <div class="snapshot-grid">
+    <div class="snap-cell"><div class="snap-label">Role</div><div class="snap-val">UX Researcher &amp; Designer</div></div>
+    <div class="snap-cell"><div class="snap-label">Type</div><div class="snap-val">Mobile UX Design</div></div>
+    <div class="snap-cell"><div class="snap-label">Methods</div><div class="snap-val">Research · Personas · Journey Maps · Testing</div></div>
+    <div class="snap-cell"><div class="snap-label">Tools</div><div class="snap-val">Figma</div></div>
+  </div>
+</header>
+
+<section class="section section-rule">
+  <div class="sec-label">01 — Problem</div>
+  <h2 class="sec-h2">The Challenge</h2>
+  <div class="card" style="max-width:720px;margin:0 auto;text-align:center;">
+    <p>Art discovery platforms frequently present historical knowledge in fragmented, dense, or inaccessible ways. Users struggle to connect artworks with context, narrative, and learning experiences.</p>
+    <p>The challenge was to design a mobile experience that balances education, discoverability, storytelling, and usability while making cultural exploration feel approachable.</p>
+    <ul style="list-style:none;padding:0;display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:8px;">
+      <li style="background:var(--bg3);border-radius:4px;padding:6px 14px;font-size:13px;color:var(--fg2);">Information overload</li>
+      <li style="background:var(--bg3);border-radius:4px;padding:6px 14px;font-size:13px;color:var(--fg2);">Weak discovery mechanisms</li>
+      <li style="background:var(--bg3);border-radius:4px;padding:6px 14px;font-size:13px;color:var(--fg2);">Limited contextual learning</li>
+      <li style="background:var(--bg3);border-radius:4px;padding:6px 14px;font-size:13px;color:var(--fg2);">Navigation complexity</li>
+      <li style="background:var(--bg3);border-radius:4px;padding:6px 14px;font-size:13px;color:var(--fg2);">Need for engaging educational interaction</li>
+    </ul>
+  </div>
+</section>
+
+<section class="section">
+  <div class="sec-label">02 — Research</div>
+  <h2 class="sec-h2">User Research &amp; Insights</h2>
+  <div class="insights">
+    <div class="insight"><p>User motivations</p></div>
+    <div class="insight"><p>Learning behaviour</p></div>
+    <div class="insight"><p>Exploration patterns</p></div>
+    <div class="insight"><p>Content expectations</p></div>
+    <div class="insight"><p>Pain points in cultural discovery</p></div>
+  </div>
+  <div class="card" style="max-width:720px;margin:0 auto;text-align:center;">
+    <h3>Research Goals</h3>
+    <p>The research phase focused on understanding how users discover, interpret, and engage with artworks and historical information through digital products.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="sec-label">03 — Personas &amp; Journey Mapping</div>
+  <h2 class="sec-h2">Understanding Users</h2>
+  <div class="card" style="max-width:720px;margin:0 auto;text-align:center;">
+    <p>Personas and journey mapping were used to synthesise user behaviour, motivations, and friction points across the discovery and learning journey.</p>
+    <h3 style="margin-top:16px;">Key Behavioural Themes</h3>
+    <ul style="list-style:none;padding:0;display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:10px;">
+      <li style="background:var(--bg3);border-radius:4px;padding:6px 14px;font-size:13px;color:var(--fg2);">Curiosity-driven exploration</li>
+      <li style="background:var(--bg3);border-radius:4px;padding:6px 14px;font-size:13px;color:var(--fg2);">Need for contextual storytelling</li>
+      <li style="background:var(--bg3);border-radius:4px;padding:6px 14px;font-size:13px;color:var(--fg2);">Accessible navigation</li>
+      <li style="background:var(--bg3);border-radius:4px;padding:6px 14px;font-size:13px;color:var(--fg2);">Mobile-friendly learning flow</li>
+      <li style="background:var(--bg3);border-radius:4px;padding:6px 14px;font-size:13px;color:var(--fg2);">Emotional engagement with content</li>
+    </ul>
+  </div>
+</section>
+
+<section class="section section-rule">
+  <div class="sec-label">04 — Ideation &amp; IA</div>
+  <h2 class="sec-h2">Information Architecture</h2>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">Step 01 —</div>
+      <h3>Content Hierarchy</h3>
+      <p>Organising art, context, and narrative into clear, browsable layers of information depth.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">Step 02 —</div>
+      <h3>Navigation Structure</h3>
+      <p>Mapping discovery flows to reduce friction and support curiosity-led exploration.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">Step 03 —</div>
+      <h3>Interaction Simplification</h3>
+      <p>Reducing cognitive load while maintaining educational richness in every interaction.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="sec-label">05 — Wireframes &amp; Iteration</div>
+  <h2 class="sec-h2">Design Refinement</h2>
+  <div class="card" style="max-width:720px;margin:0 auto;text-align:center;">
+    <h3>Iteration Focus</h3>
+    <p>The interface evolved through iterative design decisions, balancing visual clarity, educational storytelling, and mobile usability.</p>
+    <ul style="list-style:none;padding:0;display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:10px;">
+      <li style="background:var(--bg3);border-radius:4px;padding:6px 14px;font-size:13px;color:var(--fg2);">Navigation refinement</li>
+      <li style="background:var(--bg3);border-radius:4px;padding:6px 14px;font-size:13px;color:var(--fg2);">Screen hierarchy improvements</li>
+      <li style="background:var(--bg3);border-radius:4px;padding:6px 14px;font-size:13px;color:var(--fg2);">Interaction clarity</li>
+      <li style="background:var(--bg3);border-radius:4px;padding:6px 14px;font-size:13px;color:var(--fg2);">Feedback-driven revisions</li>
+      <li style="background:var(--bg3);border-radius:4px;padding:6px 14px;font-size:13px;color:var(--fg2);">Visual consistency</li>
+    </ul>
+  </div>
+</section>
+
+<section class="section">
+  <div class="sec-label">06 — Final Solution</div>
+  <h2 class="sec-h2">Prototype &amp; Outcomes</h2>
+  <div style="position:relative;width:100%;aspect-ratio:800/450;border-radius:6px;overflow:hidden;border:1px solid var(--rule);margin-bottom:24px;">
+    <iframe style="border:none;display:block;width:100%;height:100%;position:absolute;top:0;left:0;" src="https://embed.figma.com/proto/JgkATxS7Wt0jDxGvmScrqQ/HistoriArt?node-id=577-541&p=f&viewport=439%2C435%2C0.19&scaling=scale-down&content-scaling=fixed&starting-point-node-id=577%3A802&page-id=577%3A262&embed-host=share" allowfullscreen></iframe>
+  </div>
+  <div class="outcomes">
+    <div class="outcome-card"><h4>Discovery</h4><p>Improved discoverability and clearer information flow throughout the app.</p></div>
+    <div class="outcome-card"><h4>Engagement</h4><p>Stronger educational engagement through coherent cultural storytelling.</p></div>
+    <div class="outcome-card"><h4>Accessibility</h4><p>Mobile-centred, inclusive interaction design for diverse audiences.</p></div>
+  </div>
+</section>
+
+<section class="section section-rule">
+  <div class="sec-label">07 — Reflection</div>
+  <h2 class="sec-h2">Takeaways</h2>
+  <div class="card" style="max-width:720px;">
+    <p>Designing educational and cultural interfaces requires balancing information richness, usability, accessibility, and emotional engagement. This project reinforced how research and storytelling can shape more meaningful digital experiences for diverse users and learning contexts.</p>
+  </div>
+</section>
+
+<section class="section section-rule">
+  <div class="sec-label">08 — Full Deck</div>
+  <h2 class="sec-h2">View on Behance</h2>
+  <div class="card" style="max-width:720px;text-align:center;margin:0 auto;">
+    <p>The complete project deck — including all research artefacts, wireframes, personas, journey maps, and final screens — is available on Behance.</p>
+    <a href="https://www.behance.net/gallery/151707085/HistoriArt-Google-UX-Design-Course" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:8px;margin-top:20px;background:var(--pop);color:#fff;font-family:'DM Mono',monospace;font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:12px 28px;border-radius:4px;transition:opacity .2s;" onmouseover="this.style.opacity='.8'" onmouseout="this.style.opacity='1'">
+      View Full Deck on Behance ↗
+    </a>
+  </div>
+</section>
+
+<div class="case-nav">
+  <a href="eigenlytics_case_study.html">← Eigenlytics</a>
+  <span>Case Study 02 / 03</span>
+  <a href="bluesky_case_study.html">Next: Bluesky →</a>
+</div>
+
+<script>
+function toggleMode(){
+  const html=document.documentElement;
+  const btn=document.getElementById('modeBtn');
+  html.dataset.mode=html.dataset.mode==='light'?'dark':'light';
+  btn.textContent=html.dataset.mode==='dark'?'☀ Light':'☾ Dark';
+}
+</script>
+</body>
+</html>
